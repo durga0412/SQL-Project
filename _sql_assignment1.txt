@@ -1,0 +1,53 @@
+1. Write a query to print the first 5 characters of email address of all the employees.
+
+SELECT SUBSTRING(first_name,1,5) 
+FROM employees;
+
+--
+2. Display the number of locations in each country
+
+SELECT country_id, COUNT(*) from locations
+group BY country_id;
+
+--
+3. Display the region name with maximum countries.
+
+select region_name from regions r, countries c 
+where r.REGION_ID = c.REGION_ID
+order by count(*) desc;
+
+--
+4.Which employee has the highest employee ID whose name starts with ‘J’ and has a salary greater than 10000.
+
+select first_name, salary, employee_id from employees WHERE first_name like 'J%' and salary > 10000;
+
+--
+5.How many locations have the word ‘South’ somewhere in the City column?
+
+SELECT COUNT(*) FROM locations WHERE CITY LIKE '%south%';
+
+--
+6. Display the total number of employees in each department. 
+   Show the department name and the employee count in each department.
+
+select d.department_name, COUNT(*) from departments d, employees e 
+where d.DEPARTMENT_ID = E.DEPARTMENT_ID GROUP BY d.DEPARTMENT_ID;
+
+--
+7. Write a query that shows the employee name and department who has worked for the longest period of time.
+
+SELECT e.first_name, e.last_name,j.employee_id,d.department_name, max(datediff(if(end_date = '1992-12-31', curdate(), end_date), start_date)) 
+FROM job_history j, employees e, departments d WHERE d.DEPARTMENT_ID = e.DEPARTMENT_ID and j.EMPLOYEE_ID = e.EMPLOYEE_ID;
+
+--
+8. Display first names of employees whose last name have exactly 5 characters
+
+SELECT first_name, last_name from employees where length(last_name) = 5;
+
+--
+9. Write a query that shows the count of employees under each manager.
+
+SELECT e.department_id, e.first_name, e.last_name, count(*) 
+FROM employees e, departments d 
+WHERE e.DEPARTMENT_ID = d.DEPARTMENT_ID GROUP BY e.DEPARTMENT_ID;
+
